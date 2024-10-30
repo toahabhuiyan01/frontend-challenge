@@ -67,7 +67,6 @@ export default function ToDoList() {
                     filteredTodoList.map((todo, index) => (
                         <ToDoRender 
                             key={index} 
-                            index={index}
                             todoState={todo} 
                             onSave={(id, todo) => {
                                 setTodoList((prev) => {
@@ -105,12 +104,11 @@ export default function ToDoList() {
 }
 
 type ToDoRenderProps = {
-    index?: number,
     todoState?: ToDoType, 
     onSave: (id: string, todo: Partial<ToDoType> | ToDoType) => void    
     onDelete?: (id: string) => void
 }
-function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
+function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
     const [todo, setTodo] = useState(todoState || DEFAUL_TODO())
     const [editing, setEditing] = useState(todoState ? false : true)
 
