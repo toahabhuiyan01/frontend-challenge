@@ -13,6 +13,15 @@ const DEFAUL_TODO = () => ({
     isCompleted: false
 })
 
+const scrollToBottom = () => {
+    const container = document.querySelector('.todo-list-container')
+    if (container) {
+        setTimeout(() => {
+            container.scrollTop = container.scrollHeight
+        })
+    }
+}
+
 export default function ToDoList() {
     const [todoList, setTodoList] = useRecoilState(todoListState)
     const [hideCompleted, setHideCompleted] = useState(false)
@@ -35,7 +44,7 @@ export default function ToDoList() {
                     Todo List
                 </p>
                 <button
-                    className="flex flex-row items-center border-2 text-indigo-600 border-indigo-600 rounded-md px-2 py-1"
+                    className="flex flex-row items-center border-2 hover:bg-gray-200 text-indigo-600 border-indigo-600 rounded-md px-2 py-1"
                     onClick={() => setHideCompleted((prev) => !prev)}
                 >
                     {
@@ -87,6 +96,7 @@ export default function ToDoList() {
                 <ToDoRender
                     onSave={(_, todo) => {
                         setTodoList((prev) => [...prev, (todo as ToDoType)])
+                        scrollToBottom()
                     }}
                 />
             </div>
@@ -114,7 +124,7 @@ function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
     const hasChanges = useMemo(() => todo.text !== (todoState?.text || ''), [todo, todoState])
     const creating = !todoState
 
-    const checkboxStyles = todo.isCompleted || creating ? 'bg-indigo-600' : 'border-indigo-600 border-2'
+    const checkboxStyles = todo.isCompleted || creating ? 'bg-indigo-600 hover:bg-indigo-700' : 'border-indigo-600 hover:bg-gray-200 border-2'
 
     return (
         <div 
@@ -167,7 +177,7 @@ function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
             {
                 creating && (
                     <button
-                        className="bg-indigo-600 h-10 w-full sm:w-32 right-2 top-2 text-md px-2 py-1 text-white block sm:absolute rounded-md"
+                        className="bg-indigo-600 hover:bg-indigo-700 h-10 w-full sm:w-32 right-2 top-2 text-md px-2 py-1 text-white block sm:absolute rounded-md"
                         disabled={!hasChanges}
                         onClick={() => {
                                 onSave('', todo)
@@ -182,7 +192,7 @@ function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
                 editing && !creating && (
                     <div className="absolute top-2 gap-2 right-2 flex flex-row">
                         <button
-                            className="text-indigo-600 h-10 text-md px-2 py-1 rounded-md"
+                            className="hover:bg-gray-300 text-red-600 h-10 text-md px-2 py-1 rounded-full"
                             onClick={() => {
                                 setEditing(false)
                                 setTodo({
@@ -193,7 +203,7 @@ function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
                             <X />
                         </button>
                         <button
-                            className="text-red-600 h-10 text-md px-2 py-1 rounded-md"
+                            className="hover:bg-gray-300 text-indigo-600 h-10 text-md px-2 py-1 rounded-full"
                             onClick={() => {
                                 onSave(todo.id, { text: todo.text })
                                 setEditing(false)
@@ -208,14 +218,14 @@ function ToDoRender({ index, todoState, onSave, onDelete }: ToDoRenderProps) {
                 !editing && !creating && (
                     <div className="actions-container hidden absolute top-2 gap-2 right-2 flex flex-row">
                         <button
-                            className="text-indigo-600 h-10 text-md px-2 py-1 rounded-md"
+                            className="hover:bg-gray-100 text-indigo-600 h-10 text-md px-2 py-1 rounded-full"
                             disabled={todo.isCompleted}
                             onClick={() => setEditing(true)}
                         >
                             <Edit />
                         </button>
                         <button
-                            className="text-red-600 h-10 text-md px-2 py-1 rounded-md"
+                            className="hover:bg-gray-100 text-red-600 h-10 text-md px-2 py-1 rounded-full"
                             onClick={() => onDelete?.(todo.id)}
                         >
                             <Trash />
