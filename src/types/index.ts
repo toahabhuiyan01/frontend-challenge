@@ -1,5 +1,6 @@
 export type ToDoType = {
     id: string
-    text: string,
+    title: string,
+    description?: string,
     isCompleted: boolean
 }
