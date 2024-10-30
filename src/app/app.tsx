@@ -1,11 +1,14 @@
-import NxWelcome from './nx-welcome';
+import { RecoilRoot } from 'recoil'
+import ToDoList from '../components/ToDo/ToDoList'
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="theysaidfrontend" />
-    </div>
-  );
+    <RecoilRoot>
+        <div className='flex w-full h-lvh justify-center items-center'>
+            <ToDoList />
+        </div>
+    </RecoilRoot>
+  )
 }
 
-export default App;
+export default App
