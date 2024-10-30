@@ -49,9 +49,9 @@ export default function ToDoList() {
                 >
                     {
                         hideCompleted ? (
-                            <span>Show completed</span>
+                            'Show completed'
                         ) : (
-                            <span>Hide completed</span>
+                            'Hide completed'
                         )
                     }
                 </button>
@@ -192,7 +192,7 @@ function ToDoRender({ todoState, onSave, onDelete, index }: ToDoRenderProps) {
                 editing && !creating && (
                     <div className="absolute top-2 gap-2 right-2 flex flex-row">
                         <button
-                            className="hover:bg-gray-300 text-red-600 h-10 text-md px-2 py-1 rounded-full"
+                            className="hover:bg-gray-100 text-red-600 h-10 text-md px-2 py-2 rounded-full"
                             onClick={() => {
                                 setEditing(false)
                                 setTodo({
@@ -203,7 +203,7 @@ function ToDoRender({ todoState, onSave, onDelete, index }: ToDoRenderProps) {
                             <X />
                         </button>
                         <button
-                            className="hover:bg-gray-300 text-violet-700 h-10 text-md px-2 py-1 rounded-full"
+                            className="hover:bg-gray-100 text-violet-700 h-10 text-md px-2 py-2 rounded-full"
                             onClick={() => {
                                 onSave(todo.id, { text: todo.text })
                                 setEditing(false)
@@ -233,7 +233,7 @@ function ToDoRender({ todoState, onSave, onDelete, index }: ToDoRenderProps) {
                             <Edit />
                         </button>
                         <button
-                            className="hover:bg-gray-100 text-red-600 h-10 text-md px-2 py-1 rounded-full"
+                            className="hover:bg-gray-100 text-red-600 h-10 text-md px-2 py-2 rounded-full"
                             onClick={() => onDelete?.(todo.id)}
                         >
                             <Trash />
