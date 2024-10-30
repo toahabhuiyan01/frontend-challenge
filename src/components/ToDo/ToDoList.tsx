@@ -40,11 +40,11 @@ export default function ToDoList() {
             }}
         >
             <div className="w-full flex flex-row justify-between">
-                <p className="text-3xl font-bold">
+                <p className="text-4xl font-semibold">
                     Todo List
                 </p>
                 <button
-                    className="flex flex-row items-center border-2 hover:bg-gray-200 text-indigo-600 border-indigo-600 rounded-md px-2 py-1"
+                    className="flex flex-row items-center border-2 hover:bg-gray-200 text-violet-700 border-violet-700 rounded-md px-2 py-1"
                     onClick={() => setHideCompleted((prev) => !prev)}
                 >
                     {
@@ -67,6 +67,7 @@ export default function ToDoList() {
                     filteredTodoList.map((todo, index) => (
                         <ToDoRender 
                             key={index} 
+                            index={index}
                             todoState={todo} 
                             onSave={(id, todo) => {
                                 setTodoList((prev) => {
@@ -104,11 +105,12 @@ export default function ToDoList() {
 }
 
 type ToDoRenderProps = {
-    todoState?: ToDoType, 
+    index?: number
+    todoState?: ToDoType
     onSave: (id: string, todo: Partial<ToDoType> | ToDoType) => void    
     onDelete?: (id: string) => void
 }
-function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
+function ToDoRender({ todoState, onSave, onDelete, index }: ToDoRenderProps) {
     const [todo, setTodo] = useState(todoState || DEFAUL_TODO())
     const [editing, setEditing] = useState(todoState ? false : true)
 
@@ -122,7 +124,7 @@ function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
     const hasChanges = useMemo(() => todo.text !== (todoState?.text || ''), [todo, todoState])
     const creating = !todoState
 
-    const checkboxStyles = todo.isCompleted || creating ? 'bg-indigo-600 hover:bg-indigo-700' : 'border-indigo-600 hover:bg-gray-200 border-2'
+    const checkboxStyles = todo.isCompleted || creating ? 'bg-violet-700 hover:bg-violet-800' : 'border-violet-700 hover:bg-gray-200 border-2'
 
     return (
         <div 
@@ -152,8 +154,8 @@ function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
                     editing ? (
                         <input
                             type="text" 
-                            id="last_name" 
-                            className={`border-t border-gray-200 w-full h-14 py-2 pl-1 pr-1 sm:pr-32  active:outline-none focus:outline-none ${creating ? 'border-b' : ''}`}
+                            id={`input-field-${index}`}
+                            className={`border-t border-gray-200 text-lg w-full h-14 py-2 pl-1 pr-1 sm:pr-32 active:outline-none focus:outline-none ${creating ? 'border-b' : ''}`}
                             placeholder="Memorize the dictionary" 
                             value={todo?.text}
                             onChange={(e) => {
@@ -175,7 +177,7 @@ function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
             {
                 creating && (
                     <button
-                        className="bg-indigo-600 hover:bg-indigo-700 h-10 w-full sm:w-32 right-2 top-2 text-md px-2 py-1 text-white block sm:absolute rounded-md"
+                        className="bg-violet-700 hover:bg-violet-800 h-10 w-full sm:w-32 right-2 top-2 text-md px-2 py-1 text-white block sm:absolute rounded-md"
                         disabled={!hasChanges}
                         onClick={() => {
                                 onSave('', todo)
@@ -201,7 +203,7 @@ function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
                             <X />
                         </button>
                         <button
-                            className="hover:bg-gray-300 text-indigo-600 h-10 text-md px-2 py-1 rounded-full"
+                            className="hover:bg-gray-300 text-violet-700 h-10 text-md px-2 py-1 rounded-full"
                             onClick={() => {
                                 onSave(todo.id, { text: todo.text })
                                 setEditing(false)
@@ -216,9 +218,17 @@ function ToDoRender({ todoState, onSave, onDelete }: ToDoRenderProps) {
                 !editing && !creating && (
                     <div className="actions-container hidden absolute top-2 gap-2 right-2 flex flex-row">
                         <button
-                            className="hover:bg-gray-100 text-indigo-600 h-10 text-md px-2 py-1 rounded-full"
+                            className="hover:bg-gray-100 text-violet-700 h-10 text-md px-2 py-2 rounded-full"
                             disabled={todo.isCompleted}
-                            onClick={() => setEditing(true)}
+                            onClick={() => {
+                                setEditing(true)
+                                setTimeout(() => {
+                                    const input = document.getElementById(`input-field-${index}`)
+                                    if (input) {
+                                        input.focus()
+                                    }
+                                })
+                            }}
                         >
                             <Edit />
                         </button>
