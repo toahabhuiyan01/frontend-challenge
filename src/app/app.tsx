@@ -1,5 +1,5 @@
 import { RecoilRoot } from 'recoil'
-import ToDoList from '../components/ToDo/ToDoList'
+import ToDoList from '../pages/ToDo/ToDoList'
 
 export function App() {
   return (
