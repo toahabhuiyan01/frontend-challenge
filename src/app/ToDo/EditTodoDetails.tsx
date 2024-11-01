@@ -57,6 +57,7 @@ export default function EditTodoDetails({ todoState, onSave }: EditTodoDetailsPr
                             Todo Title
                         </p>
                         <input
+                            autoFocus
                             type="text" 
                             value={todo.title}
                             onChange={(e) => setTodo(prev => ({ ...prev, title: e.target.value }))}
@@ -71,7 +72,7 @@ export default function EditTodoDetails({ todoState, onSave }: EditTodoDetailsPr
                         <textarea
                             value={todo.description}
                             onChange={(e) => setTodo(prev => ({ ...prev, description: e.target.value }))}
-                            className={`text-lg h-24 bg-gray-50 w-full h-14 py-2 px-3 roundex-lg active:outline-none focus:outline-none`}
+                            className={`text-lg h-24 bg-gray-50 w-full h-14 py-2 px-3 rounded-lg active:outline-none focus:outline-none`}
                             placeholder="Memorize the dictionary"
                         />
                     </div>

@@ -24,13 +24,7 @@ export default function ToDoList() {
     )
 
     return (
-        <div
-            className="flex flex-col px-4 gap-6 justify-center items-start"
-            style={{
-                width: '60rem',
-                maxWidth: '100%',
-            }}
-        >
+        <div className="list-container flex flex-col px-4 gap-6 justify-center items-start">
             <div className="w-full flex flex-row justify-between">
                 <p className="text-4xl font-semibold">
                     Todo List
@@ -48,13 +42,7 @@ export default function ToDoList() {
                     }
                 </button>
             </div>
-            <div 
-                className="todo-list-container w-full flex flex-col"
-                style={{
-                    height: '30rem',
-                    overflowY: 'auto',
-                }}
-            >
+            <div className="todo-list-container w-full flex flex-col">
                 {
                     filteredTodoList.map((todo, index) => (
                         <ToDoRender

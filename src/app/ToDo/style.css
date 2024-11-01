@@ -1,3 +1,13 @@
 .todo-container:hover .actions-container {
     display: flex;
 }
+
+.list-container {
+    width: 60rem;
+    max-width: 100%;
+}
+
+.todo-list-container {
+    height: 30rem;
+    overflow-y: auto;
+}
